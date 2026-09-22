@@ -1,0 +1,102 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# 🧠 PulseIQ Interactive Notebook — Documentation & Architecture Notes\n",
+        "\n",
+        "PulseIQ is an AI-powered feedback intelligence platform that analyzes customer text inputs to extract sentiment, emotion, intent, urgency, and priority metrics.\n",
+        "\n",
+        "**Tech Stack:** Python • Streamlit • Scikit-learn • Pandas • NumPy • Plotly • Joblib\n",
+        "\n",
+        "---"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## 1. System Overview & Platform Workflow\n",
+        "\n",
+        "The PulseIQ platform processes raw user feedback through a multi-tier analytics pipeline:\n",
+        "\n",
+        "1. **Input Preprocessing:** Text ingestion via interactive UI (Streamlit) or CLI testing interfaces (`test_analyzer.py`, `text_intelligence.py`)[cite: 9, 11, 12].\n",
+        "2. **Sentiment Engine:** Machine learning classifier trained using Scikit-learn for probability-weighted sentiment prediction[cite: 9, 13].\n",
+        "3. **Text Intelligence Module:** Rule-based keyword and heuristics engine to extract emotions, intent, and urgency[cite: 9, 12].\n",
+        "4. **Priority Scoring Engine:** Evaluates feedback parameters to construct a normalized priority score ($0\\text{--}100$)[cite: 9, 11, 12].\n",
+        "5. **Interactive Visualization:** Streamlit dashboard rendering metric cards, probability charts, and historical tracking[cite: 9]."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## 2. Intelligence Modules & Core Logic\n",
+        "\n",
+        "### Sentiment Engine & Training Pipeline\n",
+        "- **Dataset Splitting:** Evaluates incoming dataset using a stratified $75/25$ train-test split[cite: 13].\n",
+        "- **Evaluation Metrics:** Tracks Accuracy, Precision, Recall, F1 Score, and Confusion Matrix metrics during training (`train_model.py`)[cite: 13].\n",
+        "- **Persistence:** Machine learning models are serialized to disk (`models/sentiment_model.pkl`) using `joblib`[cite: 10, 13].\n",
+        "\n",
+        "### Text Intelligence & Urgency Analytics\n",
+        "- **Emotion Detection:** Extracts emotional indicators and keyword associations from customer inputs[cite: 9, 11, 12].\n",
+        "- **Intent Classification:** Categorizes customer goals (e.g., Support Requests, Feature Inquiries, Complaints)[cite: 9, 11, 12].\n",
+        "- **Urgency & Priority Scoring:** Calculates weighted urgency scores ($0\\text{--}100$) and assigns priority levels (*Low*, *Medium*, *High*, *Critical*)[cite: 9, 11, 12]."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## 3. Data Schema & Analysis Output\n",
+        "\n",
+        "Each analyzed feedback entry generates a structured record containing key output variables:\n",
+        "\n",
+        "| Attribute | Description | Example Output |\n",
+        "|---|---|---|\n",
+        "| `sentiment` | Primary sentiment classification | Positive / Negative / Neutral |\n",
+        "| `sentiment_confidence` | Model confidence probability percentage | `92.50%` |\n",
+        "| `emotion` | Detected emotional state | Frustrated / Satisfied / Confused |\n",
+        "| `intent` | Detected user intent | Payment Issue / Support / Inquiry |\n",
+        "| `urgency_score` | Calculated urgency metric ($0\\text{--}100$) | `85/100` |\n",
+        "| `priority_level` | System priority category | High / Critical |"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## 4. UI Architecture & Features\n",
+        "\n",
+        "- **Dashboard View (`app.py`):** Configured with custom CSS glassmorphism styling, responsive columns, and input text areas[cite: 9].\n",
+        "- **Plotly Visualizations:** Displays confidence distribution bar charts and urgency vs. priority score comparisons[cite: 9].\n",
+        "- **Session History:** Preserves analysis results across sessions and allows bulk clearing of history[cite: 9]."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## 🚀 Key Takeaways\n",
+        "\n",
+        "- Combines supervised machine learning models with deterministic rule engines for high accuracy[cite: 9, 13].\n",
+        "- Provides full explainability by surfacing emotion and intent keywords alongside model outputs[cite: 9].\n",
+        "- Delivers an end-to-end feedback analytics interface powered by Streamlit and Scikit-learn[cite: 9, 10]."
+      ]
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    },
+    "language_info": {
+      "name": "python",
+      "version": "3.x"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}
